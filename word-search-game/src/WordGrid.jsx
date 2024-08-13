@@ -100,7 +100,7 @@ const WordGrid = ({ size, words }) => {
                             word.positions.includes(cellKey)
                         );
                         const isIncorrect =
-                            !isWordCorrect && isSelected && submitted; // Check if the word is incorrect and submitted
+                            !isWordCorrect && isSelected && submitted; // Check if word is incorrect and submitted
 
                         return (
                             <div
