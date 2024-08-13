@@ -81,4 +81,4 @@ function fillGridWithRandomLetters(grid) {
     );
 }
 
-export {generateEmptyGrid, canPlaceWordAt, placeWordsInGrid, placeWordAt, fillGridWithRandomLetters};
+export { generateEmptyGrid, placeWordsInGrid, fillGridWithRandomLetters };
