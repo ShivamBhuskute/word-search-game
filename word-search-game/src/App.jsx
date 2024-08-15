@@ -1,7 +1,8 @@
 import React from "react";
-import WordGrid from "./WordGrid";
+import WordGrid from "../src/components/WordGrid";
 
 const App = () => {
+    // const words = ["HELLO", "WORLD", "REACT", "GRID", "GAME"];
     const words = ["HELLO", "WORLD", "REACT", "GRID", "GAME"];
     const gridSize = 10;
 
