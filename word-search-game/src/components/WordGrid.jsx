@@ -97,7 +97,7 @@ const WordGrid = ({ size, words }) => {
         shuffleTimer = setTimeout(() => {
             shuffleBoard();
             // console.log(`Shuffled`);
-        }, 10000);
+        }, 16000);
     };
 
     const handleRestart = () => {
