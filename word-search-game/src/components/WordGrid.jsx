@@ -239,7 +239,7 @@ const WordGrid = ({ size, words }) => {
                             </div>
                         </div>
                         <div
-                            className={`bg-gray-300 grid grid-cols-10 gap-0 border-collapse border border-x-black border-y-black  text-black text-lg`}
+                            className={`bg-blue-200 grid grid-cols-10 gap-0 border-collapse border border-x-black border-y-black  text-black text-lg`}
                             style={{
                                 gridTemplateRows: `repeat(${grid.length}, 2.5rem)`,
                             }} // Adjust row height
