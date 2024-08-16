@@ -11,8 +11,10 @@ const WordGrid = ({ size, words }) => {
     const [correctWords, setCorrectWords] = useState([]);
     const [submitted, setSubmitted] = useState(false);
     const [incorrectCells, setIncorrectCells] = useState([]);
-    const [timeLeft, setTimeLeft] = useState(5); // Timer state
+    const [timeLeft, setTimeLeft] = useState(60); // Timer state
     const [isGameOver, setIsGameOver] = useState(false);
+    let shuffleTimer;
+    const [findWords, setFindWords] = useState([]);
 
     useEffect(() => {
         let newGrid = generateEmptyGrid(size);
@@ -50,15 +52,48 @@ const WordGrid = ({ size, words }) => {
         };
     }, [timeLeft]);
 
+    const shuffleBoard = () => {
+        setSelectedCells([]); // Reset selected cells
+        setCorrectWords([]); // Reset correct words
+        setIncorrectCells([]); // Reset incorrect cells
+        setSubmitted(false);
+        setTimeout(() => {
+            // Generate and set a new grid after selectedCells is reset
+            let newGrid = generateEmptyGrid(size);
+            newGrid = placeWordsInGrid(newGrid, words);
+            newGrid = fillGridWithRandomLetters(newGrid);
+            setGrid(newGrid);
+        }, 0); // Delay to allow state to clear before generating new grid
+    };
+    const restart = () => {
+        setSelectedCells([]); // Reset selected cells
+        setCorrectWords([]); // Reset correct words
+        setIncorrectCells([]); // Reset incorrect cells
+        setSubmitted(false);
+        setFindWords([]);
+        setTimeout(() => {
+            // Generate and set a new grid after selectedCells is reset
+            let newGrid = generateEmptyGrid(size);
+            newGrid = placeWordsInGrid(newGrid, words);
+            newGrid = fillGridWithRandomLetters(newGrid);
+            setGrid(newGrid);
+        }, 0); // Delay to allow state to clear before generating new grid
+    };
+
+    const startShuffleTimer = () => {
+        clearTimeout(shuffleTimer);
+        shuffleTimer = setTimeout(() => {
+            shuffleBoard();
+            console.log(`Shuffled`);
+        }, 9000);
+    };
+
     const handleRestart = () => {
         // Reset game state
         setTimeLeft(60);
         setIsGameOver(false);
         // other reset logic
-        let newGrid = generateEmptyGrid(size);
-        newGrid = placeWordsInGrid(newGrid, words);
-        newGrid = fillGridWithRandomLetters(newGrid);
-        setGrid(newGrid);
+        restart();
     };
 
     const checkWords = () => {
@@ -121,8 +156,10 @@ const WordGrid = ({ size, words }) => {
         });
 
         setCorrectWords((prev) => [...prev, ...foundWords]);
+        setFindWords((prev) => [...prev, ...foundWords.map((fw) => fw.word)]);
         setSubmitted(true); // Reset submitted state to allow further selections
         setIncorrectCells(incorrect);
+        startShuffleTimer();
     };
 
     return (
@@ -153,7 +190,7 @@ const WordGrid = ({ size, words }) => {
                                 return (
                                     <div
                                         key={cellKey}
-                                        className={`w-8 h-8 flex items-center justify-center border text-lg font-bold cursor-pointer ${
+                                        className={`cell border border-gray-400 w-10 h-10 inline-block text-center leading-10 cursor-pointer  ${
                                             isSelected
                                                 ? "bg-blue-500 text-white"
                                                 : ""
@@ -180,20 +217,11 @@ const WordGrid = ({ size, words }) => {
                             Find these words:
                         </h2>
                         <ul className="list-disc ml-5">
-                            {words.map((word, index) => (
-                                <li
-                                    key={index}
-                                    className={`${
-                                        correctWords.some(
-                                            (cw) => cw.word === word
-                                        )
-                                            ? "hidden"
-                                            : ""
-                                    }`}
-                                >
-                                    {word}
-                                </li>
-                            ))}
+                            {words
+                                .filter((word) => !findWords.includes(word))
+                                .map((word, index) => (
+                                    <li key={index}>{word}</li>
+                                ))}
                         </ul>
                     </div>
 
