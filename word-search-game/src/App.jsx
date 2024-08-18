@@ -76,11 +76,11 @@ const App = () => {
         const randomSet = wordSets[Math.floor(Math.random() * wordSets.length)];
         setWords(randomSet);
     }, []); // Empty dependency array ensures this only runs once on mount
-
     const gridSize = 10;
+    // const words = ["HELLO", "WORLD"];
 
     return (
-        <div className="flex flex-col bg-gray-900 min-h-screen">
+        <div className="bg-gray-900 min-h-screen sm:min-h-screen w-[100%]">
             {words.length > 0 && <WordGrid size={gridSize} words={words} />}
         </div>
     );
