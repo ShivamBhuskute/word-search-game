@@ -297,7 +297,7 @@ const WordGrid = ({ size, words }) => {
                         </div>
                         <div className="">
                             <button
-                                className="mt-16 p-2 bg-blue-600 text-black rounded hover:bg-blue-100"
+                                className="mt-16 p-2 bg-blue-600 text-black rounded  sm:hover:bg-blue-100"
                                 onClick={checkWords}
                             >
                                 Submit
