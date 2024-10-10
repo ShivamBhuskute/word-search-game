@@ -5,6 +5,8 @@ import {
     placeWordsInGrid,
     fillGridWithRandomLetters,
 } from "../logic/GridLogic.js";
+import Header from "./Header.jsx";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const WordGrid = ({ size, words }) => {
     const [grid, setGrid] = useState([]);
@@ -18,6 +20,7 @@ const WordGrid = ({ size, words }) => {
     const [findWords, setFindWords] = useState([]);
     const [gameCompleted, setGameCompleted] = useState(false); // New state for game completion
     const [shuffleInitiated, setShuffleInitiated] = useState(false); // Track if shuffle has been initiated
+    const navigate = useNavigate();
     // const [points, setPoints] = useState(0);
 
     useEffect(() => {
@@ -183,46 +186,43 @@ const WordGrid = ({ size, words }) => {
         // Check if all words are found
         if (findWords.length === words.length) {
             setGameCompleted(true);
+            navigate("/congratulations");
         }
 
         // console.log(foundWords.length, words.length);
     };
 
-    if (gameCompleted) {
-        return (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 relative text-white">
-                <Confetti
-                    width={window.innerWidth}
-                    height={window.innerHeight}
-                />
-                <h1 className="text-3xl font-bold">Congratulations!</h1>
-                <p className="text-lg mt-4">You found all the words!</p>
-                <button
-                    className="mt-4 p-2 bg-blue-600 text-white rounded"
-                    onClick={handleRestart}
-                >
-                    Restart Game
-                </button>
-            </div>
-        ); // Render Congratulations message if game is completed
-    }
+    // if (gameCompleted) {
+    //     return (
+    //         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 relative text-white">
+    //             <Confetti
+    //                 width={window.innerWidth}
+    //                 height={window.innerHeight}
+    //             />
+    //             <h1 className="text-3xl font-bold">Congratulations!</h1>
+    //             <p className="text-lg mt-4">You found all the words!</p>
+    //             <button
+    //                 className="mt-4 p-2 bg-blue-600 text-white rounded  hover:bg-blue-100 hover:text-black"
+    //                 onClick={handleRestart}
+    //             >
+    //                 Restart Game
+    //             </button>
+    //         </div>
+    //     ); // Render Congratulations message if game is completed
+    // }
 
     return (
         <>
-            <nav className="bg-gray-800 border-gray-200 px-4 lg:px-6 py-2.5 w-full mb-10">
-                <h1 className="text-3xl font-bold text-left text-white p-5">
-                    <span>&#128269;</span>Word Search
-                </h1>
-            </nav>
+            <Header />
             {isGameOver ? (
-                <div className="flex flex-col bg-gray-900 text-white items-center min-h-screen my-44">
-                    <h1 className="text-4xl font-bold">
+                <div className="flex flex-col bg-gray-900 text-white items-center justify-center h-[550px] sm:flex-col sm:justify-center">
+                    <h1 className="text-2xl sm:text-4xl font-bold items-center justify-center">
                         BETTER LUCK NEXT TIME!!
                     </h1>
                     <br />
                     <div>
                         <button
-                            className="flex flex-col items-center justify-center mt-4 p-2 bg-blue-600 text-white rounded"
+                            className="mt-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-100 hover:text-black"
                             onClick={handleRestart}
                         >
                             Restart
@@ -230,20 +230,16 @@ const WordGrid = ({ size, words }) => {
                     </div>
                 </div>
             ) : (
-                <div className="flex flex-row w-full mx-auto ">
+                <div className="flex flex-col sm:flex-row w-screen mt-[5%] items-center justify-items-center">
                     {/* Word Grid on the left side */}
-                    <div className="flex flex-col items-start w-1/2 mx-auto ml-80">
-                        <div className="flex flex-row">
-                            <div className="text-2xl text-white">
+                    <div className="flex flex-col items-center w-1/2">
+                        <div className="inline-block items-start">
+                            <div className="text-2xl text-white ">
                                 Time Left: {timeLeft}s
                             </div>
                         </div>
-                        <div
-                            className={`bg-blue-200 grid grid-cols-10 gap-0 border-collapse border border-x-black border-y-black  text-black text-lg`}
-                            style={{
-                                gridTemplateRows: `repeat(${grid.length}, 2.5rem)`,
-                            }} // Adjust row height
-                        >
+                        
+                        <div className="grid grid-cols-10 gap-0 sm:grid-cols-10 md:grid-cols-10 lg:grid-cols-10 col-10">
                             {grid.map((row, rowIndex) =>
                                 row.map((cell, cellIndex) => {
                                     const cellKey = `${rowIndex}-${cellIndex}`;
@@ -260,17 +256,17 @@ const WordGrid = ({ size, words }) => {
                                     return (
                                         <div
                                             key={cellKey}
-                                            className={`cell border border-black w-10 h-10 text-center leading-10 cursor-pointer ${
+                                            className={`bg-gray-300 h-6 w-5 sm:h-8 sm:w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 flex items-center justify-center sm:items-center sm:justify-center border border-black cursor-pointer  ${
                                                 isSelected
-                                                    ? "bg-blue-500 text-white"
-                                                    : ""
+                                                    ? "bg-blue-800 text-white sm:bg-blue-700"
+                                                    : "hover:bg-violet-300"
                                             } ${
                                                 isWordCorrect
-                                                    ? "bg-green-500 text-white"
+                                                    ? "bg-green-800 text-white sm:bg-green-700"
                                                     : isIncorrect
-                                                    ? "bg-red-500 text-white"
+                                                    ? "bg-red-800 text-white sm:bg-red-700"
                                                     : ""
-                                            }`}
+                                            } hover:border-blue-500`}
                                             onClick={() =>
                                                 handleCellClick(
                                                     rowIndex,
@@ -287,9 +283,9 @@ const WordGrid = ({ size, words }) => {
                     </div>
 
                     {/* Right side for words and timer */}
-                    <div className="flex flex-col items-start w-1/2 ml-10 mt-8">
-                        <div className="mt-4">
-                            <ul className="text-lg list-disc ml-5 text-white space-y-2">
+                    <div className="flex flex-col items-start w-1/2 ">
+                        <div className="">
+                            <ul className="text-lg list-disc ml-5 text-white space-y-2 grid-cols-3 mt-5 ">
                                 {words
                                     .filter((word) => !findWords.includes(word))
                                     .map((word, index) => (
@@ -299,13 +295,14 @@ const WordGrid = ({ size, words }) => {
                                     ))}
                             </ul>
                         </div>
-                        <div className="flex justify-between items-center mb-4"></div>
-                        <button
-                            className="mt-16 p-2 bg-gray-500 text-black rounded"
-                            onClick={checkWords}
-                        >
-                            Submit
-                        </button>
+                        <div className="">
+                            <button
+                                className="mt-16 p-2 bg-blue-600 text-black rounded  sm:hover:bg-blue-100"
+                                onClick={checkWords}
+                            >
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
