@@ -45,16 +45,14 @@ const Home = () => {
     return (
         <>
             <Header />
-            <div className="bg-gray-900 min-h-screen grid grid-cols-1 sm:grid-cols-3 gap-4 p-4">
-                <div className="flex flex-col justify-center items-start min-h-screen">
-                    <h1 className="font-bold text-5xl text-white">
-                        Welcome to the Home Page
+            <div className="bg-gray-900 min-h-screen grid grid-cols-1 sm:grid-cols-1 gap-4 p-4">
+                <div className="flex flex-col justify-center items-start sm:items-center">
+                    <h1 className="text-xl font-bold sm:text-5xl text-white">
+                        Ready for word search game
                     </h1>
-                    <p className="text-white">
-                        This is the content of the Home page.
-                    </p>
+                    
                     <button
-                        className="mt-4 p-2 bg-blue-600 text-white rounded hover:bg-blue-100 hover:text-black"
+                        className="mt-4 p-2 sm:p-2 sm:px-4 bg-blue-600 text-white rounded hover:bg-blue-100 hover:text-black"
                         onClick={handleClick}
                     >
                         Play
