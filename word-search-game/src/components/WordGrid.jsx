@@ -18,8 +18,8 @@ const WordGrid = ({ size, words }) => {
     const [isGameOver, setIsGameOver] = useState(false);
     let shuffleTimer;
     const [findWords, setFindWords] = useState([]);
-    const [gameCompleted, setGameCompleted] = useState(false); // New state for game completion
-    const [shuffleInitiated, setShuffleInitiated] = useState(false); // Track if shuffle has been initiated
+    const [gameCompleted, setGameCompleted] = useState(false); // game completion
+    const [shuffleInitiated, setShuffleInitiated] = useState(false); // shuffle tracking
     const navigate = useNavigate();
     // const [points, setPoints] = useState(0);
 
@@ -115,8 +115,7 @@ const WordGrid = ({ size, words }) => {
     const checkWords = () => {
         let foundWords = [];
         let incorrect = [];
-        const newFoundWords = new Set(findWords); // Set of already found words
-        // const currentFoundWords = new Set(); // Track currently found words to prevent duplicate deductions
+        const newFoundWords = new Set(findWords); // found words
 
         words.forEach((word) => {
             let positions = [];

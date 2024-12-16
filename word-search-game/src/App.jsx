@@ -75,7 +75,7 @@ const App = () => {
         // Randomly select a set of words
         const randomSet = wordSets[Math.floor(Math.random() * wordSets.length)];
         setWords(randomSet);
-    }, []); // Empty dependency array ensures this only runs once on mount
+    }, []); // Empty dependency array - run once 
     const gridSize = 10;
     // const words = ["HELLO", "WORLD"];
 
